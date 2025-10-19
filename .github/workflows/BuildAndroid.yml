@@ -1,4 +1,4 @@
-name: Build Android Local
+name: Build Android 
 
 on:
   push:
