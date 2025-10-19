@@ -4,7 +4,7 @@
   # Which nixpkgs channel to use.
   channel = "stable-25.05";
   # Use https://search.nixos.org/packages to find packages
-  packages = [ pkgs.nodejs_20 ];
+  packages = [ pkgs.nodejs_20 pkgs.yarn ];
   # Sets environment variables in the workspace
   env = { EXPO_USE_FAST_RESOLVER = 1; };
   idx = {
@@ -16,7 +16,7 @@
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
         install =
-          "npm ci --prefer-offline --no-audit --no-progress --timing && npm i @expo/ngrok@^4.1.0";
+          "yarn install --frozen-lockfile && yarn add @expo/ngrok@^4.1.0";
       };
       # Runs when a workspace restarted
       onStart = {
@@ -24,7 +24,7 @@
           echo -e "\033[1;33mWaiting for Android emulator to be ready...\033[0m"
           # Wait for the device connection command to finish
           adb -s emulator-5554 wait-for-device && \
-          npm run android -- --tunnel
+          yarn android --tunnel
         '';
       };
     };
@@ -33,7 +33,7 @@
       enable = true;
       previews = {
         web = {
-          command = [ "npm" "run" "web" "--" "--port" "$PORT" ];
+          command = [ "yarn" "web" "--port" "$PORT" ];
           manager = "web";
         };
         android = {
