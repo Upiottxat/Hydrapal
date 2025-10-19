@@ -1,7 +1,6 @@
 import LottieView from "lottie-react-native";
 import React from "react";
 import { Dimensions, StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width: screenWidth } = Dimensions.get("window");
 

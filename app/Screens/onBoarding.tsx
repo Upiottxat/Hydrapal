@@ -1,8 +1,7 @@
 import Card from '@/components/onBoarding/Card';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { StyleSheet, Text } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 const OnBoarding = () => {
   return (
@@ -10,7 +9,7 @@ const OnBoarding = () => {
         colors={['#daf1fd', '#FFFFFF']}
         style={Styles.mainOnboardingView}
       >
-        <Text  style={Styles.startedText} > Let's Get Started </Text>+
+        <Text  style={Styles.startedText} > Let&apos;s Get Started </Text>
     <View style={{flex:1}}>
     <Card title={"I’m a Thirsty Star"} icon={"star-outline"} description={"Track my own water intake and stay hydrated."}/>
     <Card title={"I’m a Guardian"} icon={"shield"} description={"Help someone special meet their hydration goals."}/>
@@ -33,9 +32,7 @@ const Styles =StyleSheet.create({
     fontFamily:'sans-serif',
     textShadowColor: 'rgba(0, 0, 0, 0.25)',
     textShadowOffset: {width: 1, height: 2},
-    textShadowRadius: 4,
-
-    boxSizing:'border-box'
+    textShadowRadius: 4
   }
 
 })

@@ -1,6 +1,6 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import React from 'react'
-import { StyleSheet, Text, TouchableHighlight, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 interface CardProps{
     title:string,
     icon:string,
