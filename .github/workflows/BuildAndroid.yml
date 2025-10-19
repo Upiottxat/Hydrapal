@@ -1,4 +1,4 @@
-name: Build Android 
+name: Build Android
 
 on:
   push:
@@ -23,7 +23,7 @@ on:
           - all
 
 env:
-  # EXPO_TOKEN removed as it's not needed for local builds
+  EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}     # set in repo → Settings → Secrets → Actions
   NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
@@ -32,9 +32,11 @@ jobs:
     if: "!contains(github.event.head_commit.message, '[skip ci]')"
     steps:
       - run: echo "Proceeding with workflow"
+
+
+
   build-and-deploy:
     if: (github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master')) || github.event_name == 'workflow_dispatch'
-    # Use a larger runner if local builds require more resources
     runs-on: ubuntu-latest
 
     steps:
@@ -48,22 +50,17 @@ jobs:
       - name: Install dependencies & EAS CLI
         run: |
          yarn install --frozen-lockfile
-         # Keeping eas-cli for the 'eas build --local' command
-         yarn global add eas-cli@latest
+
+          yarn global add eas-cli@latest
 
       - name: Verify EAS CLI
         run: eas --version
 
       # --- Android Builds ---
-      # All 'eas build' commands already include the --local flag which ensures the build
-      # runs on the GitHub Actions runner (locally) instead of on Expo's servers,
-      # eliminating the need for EXPO_TOKEN for login.
-
       - name: Build Dev APK
         if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'dev' || github.event_name == 'push'
         run: |
           echo "Dev build is currently disabled."
-          # If enabling, ensure you have a 'development' profile in eas.json
           # export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
           # eas build --platform android --profile development --local --non-interactive --output=app-dev.apk
         env:
@@ -73,7 +70,6 @@ jobs:
         if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'prod-apk' || github.event_name == 'push'
         run: |
           export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
-          # The --local flag makes this build run without needing an Expo login.
           eas build --platform android --profile production-apk --local --non-interactive --output=app-prod.apk
         env:
           NODE_ENV: production
@@ -82,7 +78,6 @@ jobs:
         if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'prod-aab' || github.event_name == 'push'
         run: |
           export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
-          # The --local flag makes this build run without needing an Expo login.
           eas build --platform android --profile production --local --non-interactive --output=app-prod.aab
         env:
           NODE_ENV: production

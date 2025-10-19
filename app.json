@@ -43,6 +43,13 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9e58ff19-af71-4aa5-a3ed-cdef75db395c"
+      }
+    },
+    "owner": "upiot"
   }
 }
