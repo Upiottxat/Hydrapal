@@ -11,8 +11,8 @@ const OnBoarding = () => {
       >
         <Text  style={Styles.startedText} > Let&apos;s Get Started </Text>
     <View style={{flex:1}}>
-    <Card title={"I’m a Thirsty Star"} icon={"star-outline"} description={"Track my own water intake and stay hydrated."}/>
-    <Card title={"I’m a Guardian"} icon={"shield"} description={"Help someone special meet their hydration goals."}/>
+    <Card title={"I’m a Thirsty Star"} icon={"star-outline"} description={"Track my own water intake and stay hydrated."} role={"star"}/>
+    <Card title={"I’m a Guardian"} icon={"shield"} description={"Help someone special meet their hydration goals."}role={"guardian"}/>
     </View>
     </LinearGradient>
   )

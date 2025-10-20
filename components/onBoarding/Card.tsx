@@ -1,14 +1,20 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
+import { useRouter } from 'expo-router'
 import React from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 interface CardProps{
     title:string,
     icon:string,
-    description:string
+    description:string,
+    role:string
 }
-const Card = ({title,icon,description}:CardProps) => {
+const Card = ({title,icon,description,role}:CardProps) => {
+    const router=useRouter();
+    const selectRole=()=>{
+    router.push({ pathname: "/Screens/SignIn", params: { role } });
+    }
   return (
-    <TouchableOpacity style={Styles.card}>
+<TouchableOpacity style={Styles.card} onPressOut={selectRole}>
         <View style={Styles.innerCard}>
             <MaterialIcons name={icon} style={Styles.cardIcon}></MaterialIcons>
             <Text style={Styles.cardText}>{title}</Text>

@@ -69,8 +69,9 @@ jobs:
       - name: Build Production APK
         if: github.event.inputs.buildType == 'all' || github.event.inputs.buildType == 'prod-apk' || github.event_name == 'push'
         run: |
-          export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
-          eas build --platform android --profile production-apk --local --non-interactive --output=app-prod.apk
+           echo "Apk build is currently disabled"
+        #  export NODE_OPTIONS="--openssl-legacy-provider --max_old_space_size=4096"
+        #  eas build --platform android --profile production-apk --local --non-interactive --output=app-prod.apk
         env:
           NODE_ENV: production
 

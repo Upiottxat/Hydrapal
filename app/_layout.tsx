@@ -14,7 +14,7 @@ export default function RootLayout() {
       <Stack>
         {/* Initial Index Screen */}
         <Stack.Screen
-          name="Index"
+          name="index"
           options={{
             headerShown: false,
           }}
@@ -37,6 +37,14 @@ export default function RootLayout() {
             
             />,
           }}
+        />
+        <Stack.Screen
+        name="Screens/SignIn"
+        options={{
+          header: () => <HeaderAnimated HeaderTitle="Welcome 💧"
+          
+          />,
+        }}
         />
       </Stack>
 
