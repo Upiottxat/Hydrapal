@@ -11,8 +11,6 @@ import {
 } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-
-
 let BACKEND_URL: string | undefined;
 let GOOGLE_OAUTH_CLIENT_ID: string | undefined;
 try {
@@ -63,6 +61,10 @@ const SignIn = () => {
     }catch(err){
       console.log("testing backend connecting failed",err, BACKEND_URL ?? '(undefined)', GOOGLE_OAUTH_CLIENT_ID ?? '(undefined)');
     }
+  }
+
+  const handleGoogleSignIn=async ()=>{
+    // await GoogleSig
   }
   
   return (
@@ -146,7 +148,10 @@ const SignIn = () => {
 
           {/* Continue with Google Button */}
           <TouchableOpacity
-            style={[styles.button, styles.buttonSecondary]}>
+            
+            onPress={handleGoogleSignIn}
+            style={[styles.button, styles.buttonSecondary]}
+            >
             <Image
               style={styles.googleLogo}
               source={require("../../assets/images/GoogleIcon.png")}
