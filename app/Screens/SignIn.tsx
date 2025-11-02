@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Image,
   ScrollView,
@@ -9,7 +9,23 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
+
+
+let BACKEND_URL: string | undefined;
+let GOOGLE_OAUTH_CLIENT_ID: string | undefined;
+try {
+
+  const env = require('@env');
+  BACKEND_URL = env.BACKEND_URL;
+  GOOGLE_OAUTH_CLIENT_ID = env.GOOGLE_OAUTH_CLIENT_ID;
+} catch (e) {
+
+  BACKEND_URL = process.env.BACKEND_URL;
+  GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID;
+}
+
 // --- Icon Placeholders ---
 const MailIcon = () => <Text style={styles.icon}>📧</Text>;
 const LockIcon = () => <Text style={styles.icon}>🔒</Text>;
@@ -18,13 +34,37 @@ const WaterDropIcon = () => (
   <Text style={[styles.icon, styles.waterDropIcon]}>💧</Text>
 );
 
-// --- App Component ---
-const App = () => {
-  // State for form inputs
+
+const SignIn = () => {
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
+  // useEffect(()=>{
+
+  
+
+  //   GoogleSignin.configure({
+  //     webClientId:process.env.GOOGLE_OAUTH_CLIENT_ID
+  //   })
+  // },[])
+  useEffect(()=>{
+    test();
+  },[])
+
+  const test=async ()=>{
+    try{
+      const target = BACKEND_URL ?? 'http://localhost:3000';
+      const response=await fetch(target);
+      const data=await response.text();
+      console.log("testing backend connecting success",data);
+
+    }catch(err){
+      console.log("testing backend connecting failed",err, BACKEND_URL ?? '(undefined)', GOOGLE_OAUTH_CLIENT_ID ?? '(undefined)');
+    }
+  }
+  
   return (
     <SafeAreaView style={styles.safeArea}>
       {/* Set status bar to dark-content for light mode */}
@@ -337,4 +377,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default SignIn;
