@@ -1,41 +1,340 @@
+import React, { useState } from 'react';
+import {
+  Image,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+// --- Icon Placeholders ---
+const MailIcon = () => <Text style={styles.icon}>📧</Text>;
+const LockIcon = () => <Text style={styles.icon}>🔒</Text>;
+const VisibilityOffIcon = () => <Text style={styles.icon}>👁️</Text>;
+const WaterDropIcon = () => (
+  <Text style={[styles.icon, styles.waterDropIcon]}>💧</Text>
+);
 
-import { LinearGradient } from 'expo-linear-gradient'
-import React from 'react'
-import { StyleSheet, Text, TextInput, View,Button } from 'react-native'
-interface Props {
-  role: "star" | "guardian"
-}
-const SignIn = ({ role }: Props) => {
+// --- App Component ---
+const App = () => {
+  // State for form inputs
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
   return (
-    <LinearGradient
-      colors={['#daf1fd', '#FFFFFF']}
-      style={styles.container}
-    >
+    <SafeAreaView style={styles.safeArea}>
+      {/* Set status bar to dark-content for light mode */}
+      <StatusBar barStyle={'dark-content'} />
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContainer}
+        keyboardShouldPersistTaps="handled">
+        <View style={styles.container}>
+          <View style={styles.logoContainer}>
+            <WaterDropIcon />
+          </View>
 
-      <Text>A Refreshing Start to better hydration
-      </Text>
-      <View>
-       <Text>Email</Text>
-       <View><TextInput placeholder='Enter your email'/> </View>
-       <Text>Password</Text>
-       <View><TextInput placeholder='Enter your Password'/> </View>
-      </View>
-      <Text>foget your password</Text>
-      <Button title={"Dive In"}></Button>
-      
-    </LinearGradient>
+          <View style={styles.textCenter}>
+            <Text style={styles.heading}>Welcome Back</Text>
+            <Text style={styles.subheading}>
+              A refreshing start to better hydration.
+            </Text>
+          </View>
+
+          <View style={styles.formContainer}>
+            {/* Email Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Email</Text>
+              <View style={[styles.inputWrapper, styles.inputWrapperRow]}>
+                <View
+                  style={[styles.iconContainer, styles.iconContainerLeft]}>
+                  <MailIcon />
+                </View>
+                <TextInput
+                  style={[styles.input, styles.inputLeftIcon]}
+                  placeholder="Enter your email"
+                  placeholderTextColor={styles.placeholder.color}
+                  value={email}
+                  onChangeText={setEmail}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                />
+              </View>
+            </View>
+
+            {/* Password Input */}
+            <View style={styles.inputGroup}>
+              <Text style={styles.label}>Password</Text>
+              <View style={[styles.inputWrapper, styles.inputWrapperRow]}>
+                <View
+                  style={[styles.iconContainer, styles.iconContainerLeft]}>
+                  <LockIcon />
+                </View>
+                <TextInput
+                  style={[styles.input, styles.inputMiddle]}
+                  placeholder="Enter your password"
+                  placeholderTextColor={styles.placeholder.color}
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry={!isPasswordVisible}
+                />
+                <TouchableOpacity
+                  style={[styles.iconContainer, styles.iconContainerRight]}
+                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}>
+                  <VisibilityOffIcon />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+
+          {/* Sign In Button */}
+          <TouchableOpacity style={[styles.button, styles.buttonPrimary]}>
+            <Text style={[styles.buttonText, styles.buttonTextPrimary]}>
+              Sign In
+            </Text>
+          </TouchableOpacity>
+
+          {/* OR Separator */}
+          <View style={styles.separatorContainer}>
+            <View style={styles.separatorLine} />
+            <Text style={styles.separatorText}>OR</Text>
+            <View style={styles.separatorLine} />
+          </View>
+
+          {/* Continue with Google Button */}
+          <TouchableOpacity
+            style={[styles.button, styles.buttonSecondary]}>
+            <Image
+              style={styles.googleLogo}
+              source={require("../../assets/images/GoogleIcon.png")}
+            />
+            <Text
+              style={[styles.buttonText, styles.buttonTextSecondary]}>
+              Continue with Google
+            </Text>
+          </TouchableOpacity>
+
+          {/* Sign Up Link */}
+          <View style={styles.signupContainer}>
+            <Text style={styles.signupText}>
+              Don't have an account?{' '}
+              <Text style={styles.signupLink}>Sign Up</Text>
+            </Text>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+};
 
 
-  )
-}
+const colors = {
+  primary: "skyblue",
+  backgroundLight: '#daf1fd',
+  headingLight: '#37474F',
+  bodyLight: '#78909C',
+  grayLight: '#E5E7EB',
+  white: '#FFFFFF',
+  black: '#000000',
+};
 
 const styles = StyleSheet.create({
+
+  safeArea: {
+    flex: 1,
+    backgroundColor: colors.backgroundLight,
+  },
+  scrollViewContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'aliceblue'
-  }
-})
+    padding: 16,
+  },
+  logoContainer: {
+    marginBottom: 10,
+  },
+  textCenter: {
+    alignItems: 'center',
+  },
+  formContainer: {
+    width: '100%',
+    marginVertical: 24,
+  },
 
-export default SignIn
+
+  heading: {
+    fontFamily: 'Poppins-SemiBold',
+    fontSize: 32,
+    fontWeight: '600',
+    color: colors.headingLight,
+  },
+  subheading: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 16,
+    color: colors.bodyLight,
+    paddingTop: 4,
+  },
+  label: {
+    fontFamily: 'NunitoSans-SemiBold',
+    fontWeight: '600',
+    color: colors.bodyLight,
+    paddingBottom: 8,
+  },
+  signupText: {
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 16,
+    color: colors.bodyLight,
+  },
+  signupLink: {
+    fontWeight: '700',
+    color: colors.primary,
+    textDecorationLine: 'underline',
+  },
+
+ 
+  inputGroup: {
+    width: '100%',
+    marginBottom: 16,
+  },
+  inputWrapper: {
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
+    borderWidth: 1,
+    borderRadius: 12,
+    shadowColor: colors.black,
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.05,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  inputWrapperRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    fontSize: 24,
+    color: colors.bodyLight,
+  },
+  waterDropIcon: {
+    fontSize: 64,
+    color: colors.primary,
+  },
+  iconContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
+    borderWidth: 1,
+    paddingHorizontal: 16,
+    height: 56,
+  },
+  iconContainerLeft: {
+    borderRightWidth: 0,
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
+  },
+  iconContainerRight: {
+    borderLeftWidth: 0,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  input: {
+    flex: 1,
+    height: 56,
+    padding: 16,
+    fontFamily: 'NunitoSans-Regular',
+    fontSize: 16,
+    color: colors.headingLight,
+    backgroundColor: colors.white,
+    borderColor: colors.grayLight,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+  },
+  inputLeftIcon: {
+    borderLeftWidth: 0,
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+  },
+  inputMiddle: {
+    
+  },
+  placeholder: {
+    color: '#A1A1AA',
+  },
+
+  button: {
+    height: 56,
+    borderRadius: 9999,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    width: '100%',
+
+  
+  },
+  buttonText: {
+    fontFamily: 'NunitoSans-Bold',
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  buttonPrimary: {
+    backgroundColor: colors.primary,
+    shadowColor: colors.primary,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 8,
+  },
+  buttonTextPrimary: {
+    color: colors.headingLight,
+  },
+  buttonSecondary: {
+    backgroundColor: colors.white,
+    borderWidth: 1,
+    borderColor: colors.grayLight,
+  },
+  buttonTextSecondary: {
+    color: colors.headingLight,
+  },
+  googleLogo: {
+    width: 24,
+    height: 24,
+    marginRight: 12,
+  },
+
+ 
+  separatorContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '100%',
+    marginVertical: 16,
+  },
+  separatorLine: {
+    flex: 1,
+    height: 1,
+    backgroundColor: colors.grayLight,
+  },
+  separatorText: {
+    paddingHorizontal: 16,
+    color: colors.bodyLight,
+    fontSize: 14,
+    fontWeight: '600',
+    fontFamily: 'NunitoSans-SemiBold',
+  },
+
+ 
+  signupContainer: {
+    paddingTop: 16,
+    alignItems: 'center',
+  },
+});
+
+export default App;

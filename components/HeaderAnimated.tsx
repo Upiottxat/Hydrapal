@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
     height: 120, // 💖 header height
     marginBottom:0,
     padding:10,
+    
   },
   title: {
     fontSize: 25,

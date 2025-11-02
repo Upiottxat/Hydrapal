@@ -1,6 +1,7 @@
+import { ThemedText } from "@/components/themed-text";
+import { ThemedView } from "@/components/themed-view";
 import { useRouter } from "expo-router";
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const Index = () => {
@@ -17,9 +18,9 @@ const Index = () => {
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <View>
-        <Text>Hi chammo 💕</Text>
-      </View>
+      <ThemedView>
+        <ThemedText>Hi chammo 💕</ThemedText>
+      </ThemedView>
     </SafeAreaView>
   );
 };

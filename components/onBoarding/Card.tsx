@@ -1,7 +1,7 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { useRouter } from 'expo-router'
 import React from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 interface CardProps{
     title:string,
     icon:string,
@@ -14,13 +14,13 @@ const Card = ({title,icon,description,role}:CardProps) => {
     router.push({ pathname: "/Screens/SignIn", params: { role } });
     }
   return (
-<TouchableOpacity style={Styles.card} onPressOut={selectRole}>
+<Pressable style={Styles.card} onPressOut={selectRole}>
         <View style={Styles.innerCard}>
             <MaterialIcons name={icon} style={Styles.cardIcon}></MaterialIcons>
             <Text style={Styles.cardText}>{title}</Text>
             <Text style={Styles.cardDescription}>{description}</Text>
         </View>
-    </TouchableOpacity>
+    </Pressable>
   )
 }
 const Styles=StyleSheet.create({
